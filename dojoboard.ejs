@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <title>Message Board</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Dojo Message Board</h2>
+        <hr>
+        <div class="container">
+            <!-- tip to easily see objects printed in full instead of [object Object] -->
+            <!-- based on the structure of your messages, determine how to display them -->
+            <% if(messages.registration) { %>
+            <% for (var x of messages.registration) { %>
+            <h6>
+                <%= x %>
+            </h6>
+            <% } %>
+            <% } %>
+            <form action="/publish" method="post">
+                <div class="container">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="clientname" placeholder="Name" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="clientmsg" placeholder="Message..." />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <h4>Messages</h4>
+        <div class="container">
+            <%for (var m in mesg){%>
+            <p>Name:
+                <%= mesg[m].name%>
+            </p>
+            <p>Message:
+                <%= mesg[m].message%>
+            </p>
+            <div class="container">
+                <div class="row">
+                    <div class="container">
+                        <%  for (var c of mesg[m].comments){%>
+                        <p>Name:
+                            <%= c.name%>
+                        </p>
+                        <p>Comment:
+                            <%= c.comment%>
+                        </p>
+                        <%}%>
+                    </div>
+                </div>
+                <div class="col">
+                    <form action="/publishcom" method="post">
+                        <div class="container">
+                            <input type="hidden" name="hide" value="<%=mesg[m]._id%>" />
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="comname" placeholder="Name" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="comment" placeholder="Comment..." />
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+            <%}%>
+        </div>
+    </div>
+</body>
+
+</html>
